@@ -3,6 +3,7 @@ set -e
 
 script_dir_path="$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)"
 resources_path="$1"
+container_build="${CONTAINER_BUILD:-false}"
 if [ ! -z "${resources_path}" ]; then
     resources_path="$(realpath "${resources_path}")"
 fi
@@ -37,5 +38,5 @@ fi
     -nsu \
     -s "${MAVEN_SETTINGS_PATH}" \
     -DskipTests \
-    -Dquarkus.container-image.build=false \
-    clean install
+    -Dquarkus.container-image.build="${container_build}" \
+clean install
